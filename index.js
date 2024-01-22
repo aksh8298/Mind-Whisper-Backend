@@ -4,8 +4,7 @@ const Users = require("./src/models/users")
 const { register, login, findUser } = require("./src/Controllers/users")
 const server = express()
 const cors = require("cors")
-const { verifyToken} = require("./src/Middlewares")
-const {validateForm,isValidated} = require("./src/Middlewares/index")
+const { verifyToken,validateForm,isValidated} = require("./src/Middlewares")
 const {addForm} = require("./src/Controllers/Form")
 server.use(express.json())
 server.use(cors())
@@ -26,7 +25,15 @@ server.post("/register",register)
 server.post("/login",login) 
 server.get("/get-user",verifyToken,findUser)
 server.post("/addForm",validateForm,isValidated,addForm)
+
+mongoose.connect("mongodb://localhost:27017")
+   .then(data => console.log("Database Connected"))
+   .catch(errore => console.log("Error"))
    
+   const { join } = require('node:path');
+   server.get('/', (req, res) => {
+     res.sendFile(join(__dirname, 'index.html'));
+   });
   io.on("connection",(socket) => {
     console.log("new user connected");
     socket.on("message",(message,room)=>{
@@ -38,16 +45,9 @@ server.post("/addForm",validateForm,isValidated,addForm)
       socket.emit("joined")
     })
   })
-     mongoose.connect("mongodb://localhost:27017")
-        .then(data => console.log("Database Connected"))
-        .catch(errore => console.log("Error"))
 
         
 
-const { join } = require('node:path');
-server.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'index.html'));
-});
 
 
 
