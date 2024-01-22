@@ -20,7 +20,8 @@ hash_password:{
     type:String,
     required:true
 }
-})
+},{timestamps:true})
+
 user.virtual("password").set(function(password){
     this.hash_password=bcrypt.hashSync(password,10)
 })

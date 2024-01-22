@@ -4,7 +4,7 @@
   "description": "mental health analyzer backend",
   "main": "index.js",
   "scripts": {
-    "build":"",
+    
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
